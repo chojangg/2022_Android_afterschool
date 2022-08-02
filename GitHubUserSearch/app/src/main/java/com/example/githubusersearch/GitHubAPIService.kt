@@ -17,6 +17,13 @@ interface GitHubAPIService {
         @Path("userId") id: String,
         @Header("Authorization") pat: String
     ) : Call<GitHubUser>
+
+    @GET("/users/{userId}/repos")
+    fun getRepos(
+        @Path("userId") id: String,
+        @Header("Authorization") pat: String
+    ) : Call<List<GitHubRepo>>
+
 }
 
 data class GitHubUser(
@@ -28,6 +35,15 @@ data class GitHubUser(
     @SerializedName("avatar_url")
     val avatarUrl: String
     )
+
+data class GitHubRepo(
+    val name: String,
+    val html_url: String,
+    val description: String?,
+    val forks_count: Int,
+    val watchers_count: Int,
+    val stargazers: Int
+)
 
 /*
 class GitHubUserDeserializer : JsonDeserializer<GitHubUser> {

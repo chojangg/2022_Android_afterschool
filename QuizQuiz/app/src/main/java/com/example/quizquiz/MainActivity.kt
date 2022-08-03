@@ -9,11 +9,11 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
-import androidx.room.Entity
 import com.example.quizquiz.database.Quiz
 import com.example.quizquiz.database.QuizDatabase
+import com.google.android.material.navigation.NavigationView
 import org.w3c.dom.Element
+import java.io.InputStream
 import javax.xml.parsers.DocumentBuilderFactory
 
 class MainActivity : AppCompatActivity() {
@@ -26,18 +26,15 @@ class MainActivity : AppCompatActivity() {
 
         db = QuizDatabase.getInstance(this)
 
-//        db.quizDAO().insert(
-//            Quiz(type = "OX", question = "asdf", answer = "", category = "?")
-//        )
         Thread(Runnable {
-            for (quiz in db.quizDAO().getAll()) {
+            for(quiz in db.quizDAO().getAll()) {
                 Log.d("mytag", quiz.toString())
             }
         }).start()
 
         val sp : SharedPreferences = getSharedPreferences(
             "pref", Context.MODE_PRIVATE)
-        if (sp.getBoolean("initialized", true)) {
+        if(sp.getBoolean("initialized", true)) {
             initQuizDataFromXMLFile()
             val editor = sp.edit()
             editor.putBoolean("initialized", false)
@@ -66,6 +63,12 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.frame, QuizListFragment())
                         .commit()
                 }
+                R.id.quiz_add -> {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.frame, QuizCreateFragment())
+                        .commit()
+                }
             }
 
             drawerLayout.closeDrawers()
@@ -82,8 +85,9 @@ class MainActivity : AppCompatActivity() {
         // isDrawerIndicatorEnabled 속성을 true로 설정해 액션바의 왼쪽 상단에 위치한 햄버거 아이콘을 통해 내비게이션 드로어를 표시하고 숨길 수 있도록 합니다.
         drawerToggle.isDrawerIndicatorEnabled = true
         drawerLayout.addDrawerListener(drawerToggle)
-        // setDisplayHomeAsUpEnabled 메서드를 호출해서 햄버거 아이콘을 표시하고 해당 아이콘을 클릭해 내비게이션 드로어를 열고 닫을 수 있도록 설정합니다.
+        // setDisplayHomeAsUpEnabled 메서드를 호출해서 햄버거 아이콘을 표시하고 해당 아이콘을 클릭해 내비게이션 드로어를 열고 닫을 수 있도록 설
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -93,7 +97,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
+        if(drawerToggle.onOptionsItemSelected(item)) {
             return true
         }
 
@@ -111,6 +115,7 @@ class MainActivity : AppCompatActivity() {
 
             val quizzesFromXMLDoc = doc.getElementsByTagName("quiz")
             val quizList = mutableListOf<Quiz>()
+            Log.d("mytag", quizzesFromXMLDoc.length.toString())
             for(idx in 0 until quizzesFromXMLDoc.length) {
                 // org.w3c.dom 패키지의 Element 클래스 import
                 val e = quizzesFromXMLDoc.item(idx) as Element
@@ -120,10 +125,15 @@ class MainActivity : AppCompatActivity() {
                 val answer = e.getElementsByTagName("answer").item(0).textContent
                 val category = e.getElementsByTagName("category").item(0).textContent
 
+                Log.d("mytag", type)
+                Log.d("mytag", question)
                 when(type) {
                     "ox" -> {
                         quizList.add(
-                            Quiz(type = type, question = question, answer = answer, category = category)
+                            Quiz(type=type,
+                                question=question,
+                                answer=answer,
+                                category = category)
                         )
                     }
                     "multiple_choice" -> {
@@ -138,23 +148,12 @@ class MainActivity : AppCompatActivity() {
                                 guesses=choiceList))
                     }
                 }
-
             }
-            for (quiz in quizList) {
+
+            for(quiz in quizList) {
                 db.quizDAO().insert(quiz)
             }
+
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

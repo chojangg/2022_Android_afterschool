@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "315212418425",
+    "project_id": "fir-study-d4b22",
+    "storage_bucket": "fir-study-d4b22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315212418425:android:0e0e7b63db5368ac83f3a8",
+        "android_client_info": {
+          "package_name": "chojang.firebasestudy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315212418425-cd7g9v1pks0tuu6p8nuhaecccrgpivju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "chojang.firebasestudy",
+            "certificate_hash": "843908fe484c744614c6a0101a349d5b11fd9a7f"
+          }
+        },
+        {
+          "client_id": "315212418425-ie3sbipm7lpkc3q5k3ihi0mn3llcbo09.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFXpmAcI-f8dRkdWdha_LaW2GxtfL6rEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315212418425-ie3sbipm7lpkc3q5k3ihi0mn3llcbo09.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

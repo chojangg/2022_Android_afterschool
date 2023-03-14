@@ -22,3 +22,12 @@ gi
 
 리모트 저장소에도 변경 사항 반영
 > git push --all
+
+
+ex)
+순서
+1. git add FragmentStudy
+2. git add .
+3. git commit =m "JSON 역직렬화 예제 프로젝트 추가"
+4. git status
+5. git push --all
